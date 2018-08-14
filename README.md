@@ -1,6 +1,6 @@
-# tiendamerak
+# tienda
 
-> Inventario Tienda Merak
+> Inventario Tienda
 
 ## Build Setup
 
