@@ -8,6 +8,31 @@
     .container
       .columns
         .column.is-12
+          article.tile.is-child.box
+                  .field
+                    .control
+                      input.input.is-rounded(type="text", placeholder="Nombre", v-model="newProduct.name")
+
+                  .field
+                    .control
+                      textarea.textarea(type="textarea", placeholder="Comentario", v-model="newProduct.comment")
+
+                  .field
+                    .control
+                      input.input.is-rounded(type="number", placeholder="Precio", v-model="newProduct.price")
+                  
+                  .field
+                    .control
+                      p.buttons
+                        a.button.is-small.is-primary(@click="addProduct")
+                          span.icon
+                            i.fa.fa-plus
+                        
+                        a.button.is-small.is-danger(@click="clear")
+                          span.icon
+                            i.fa.fa-times
+      .columns
+        .column.is-12
           section.info-tiles
             .tile.is-ancestor.has-text-centered
               .tile.is-parent
@@ -16,8 +41,10 @@
                   p.subtitle Total del día
               .tile.is-parent
                 article.tile.is-child.box
-                  p.title +
-                  p.subtitle Nuevo
+                  p.title 439k
+                  p.subtitle Total del día
+
+                  
           .columns
             .column.is-6
               .card.events-card
@@ -31,76 +58,20 @@
                   .content
                     table.table.is-fullwidth.is-striped
                       tbody
-                        tr
+                        tr(v-for="(p, i) in products") 
                           td(width='5%')
                             i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
+                          td {{ p.name }} - {{ p.price }}
+                            p {{ p.date | formatDate  }}
                           td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
+                            p.buttons.is-pulled-right
+                              a.button.is-small.is-primary
+                                span.icon
+                                  i.fa.fa-plus
+                              
+                              a.button.is-small.is-danger(@click="clear")
+                                span.icon
+                                  i.fa.fa-times(@click="removeProduct(i)")
             .column.is-6
               .card
                 header.card-header
@@ -129,70 +100,108 @@
                   .content
                     table.table.is-fullwidth.is-striped
                       tbody
-                        tr
+                        tr(v-for="(p, i) in products") 
                           td(width='5%')
                             i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
+                          td {{ p.name }} - {{ p.price }}
                           td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
-                        tr
-                          td(width='5%')
-                            i.fa.fa-chevron-right
-                          td Lorum ipsum dolem aire
-                          td
-                            a.button.is-small.is-primary(href='#')
-                              i.fa.fa-plus
+                            p.buttons.is-pulled-right
+                              a.button.is-small.is-primary
+                                span.icon
+                                  i.fa.fa-plus
+                              
+                              a.button.is-small.is-danger(@click="clear")
+                                span.icon
+                                  i.fa.fa-times(@click="removeProduct(i)")
 
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      welcome: 'Bienvenido',
-      name: 'Leonel',
-      lastname: 'Rojas',
-    }
+      welcome: "Bienvenido",
+      name: "Leonel",
+      lastname: "Rojas",
+      products: [],
+      daySales: [],
+      newProduct: {
+        name: "",
+        comment: "",
+        price: 0,
+        date: null
+      }
+    };
+  },
+
+  created() {
+    this.products = JSON.parse(localStorage.getItem("products")) || [];
+    this.daySales = JSON.parse(localStorage.getItem("products")) || [];
   },
 
   computed: {
     createdBy() {
-      return 'Creado por: ' + this.name + ' ' + this.lastname
+      return `Creado por: ${this.name} ${this.lastname}`;
+    },
+    totalDay() {
+      if (!this.products.length) {
+        return 0;
+      }
+
+      let total = 0;
+
+      this.products.forEach(p => {
+        total += parseInt(p.price);
+      });
+
+      return total;
     }
   },
-}
+  methods: {
+    addProduct() {
+      if (!this.newProduct.name || !this.newProduct.price) return;
+
+      this.products.push({
+        name: this.newProduct.name,
+        price: this.newProduct.price,
+        comment: this.newProduct.comment,
+        date: new Date()
+      });
+
+      localStorage.setItem("products", JSON.stringify(this.products));
+
+      this.newProduct.name = "";
+      this.newProduct.comment = "";
+      this.newProduct.price = 0;
+      this.newProduct.date = null;
+    },
+
+    removeProduct(index) {
+      this.products.splice(index, 1);
+      localStorage.setItem("products", JSON.stringify(this.products));
+    },
+
+    clear() {
+      this.newProduct.name = "";
+      this.newProduct.comment = "";
+      this.newProduct.price = 0;
+    }
+  },
+
+  filters: {
+    formatDate(date) {
+      var dateObj = new Date(date);
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+
+      return `${day} / ${month} / ${year}`;
+    }
+  }
+};
 </script>
 
 <style lang="scss">
-  @import './scss/main.scss'
+@import "./scss/main.scss";
 </style>
