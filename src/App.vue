@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    img(src="./assets/logo.png")
+    img(src="./assets/logo-merak.png")
     h1 {{ welcome }}
     h2 {{ createdBy }}
       i.fa.fa-linkedin-square
@@ -37,8 +37,8 @@
             .tile.is-ancestor.has-text-centered
               .tile.is-parent
                 article.tile.is-child.box
-                  p.title 439k
-                  p.subtitle Total del día
+                  p.title {{ totalProducts }}
+                  p.subtitle Total de productos registrados
               .tile.is-parent
                 article.tile.is-child.box
                   p.title 439k
@@ -61,8 +61,7 @@
                         tr(v-for="(p, i) in products") 
                           td(width='5%')
                             i.fa.fa-chevron-right
-                          td {{ p.name }} - {{ p.price }}
-                            p {{ p.date | formatDate  }}
+                          td {{ p.name }} - ${{ p.price }}
                           td
                             p.buttons.is-pulled-right
                               a.button.is-small.is-primary
@@ -100,10 +99,10 @@
                   .content
                     table.table.is-fullwidth.is-striped
                       tbody
-                        tr(v-for="(p, i) in products") 
+                        tr(v-for="(p, i) in daySales") 
                           td(width='5%')
                             i.fa.fa-chevron-right
-                          td {{ p.name }} - {{ p.price }}
+                          td {{ p.name }} - ${{ p.price }}
                           td
                             p.buttons.is-pulled-right
                               a.button.is-small.is-primary
@@ -121,7 +120,7 @@ export default {
   name: "app",
   data() {
     return {
-      welcome: "Bienvenido",
+      welcome: "Bienvenido a Merak",
       name: "Leonel",
       lastname: "Rojas",
       products: [],
@@ -137,7 +136,7 @@ export default {
 
   created() {
     this.products = JSON.parse(localStorage.getItem("products")) || [];
-    this.daySales = JSON.parse(localStorage.getItem("products")) || [];
+    this.daySales = JSON.parse(localStorage.getItem("products-sales")) || [];
   },
 
   computed: {
@@ -156,6 +155,9 @@ export default {
       });
 
       return total;
+    },
+    totalProducts() {
+      return this.products.length
     }
   },
   methods: {
@@ -186,7 +188,25 @@ export default {
       this.newProduct.name = "";
       this.newProduct.comment = "";
       this.newProduct.price = 0;
-    }
+    },
+
+    addProductSale() {
+      if (!this.newProduct.name || !this.newProduct.price) return;
+
+      this.products.push({
+        name: this.newProduct.name,
+        price: this.newProduct.price,
+        comment: this.newProduct.comment,
+        date: new Date()
+      });
+
+      localStorage.setItem("products", JSON.stringify(this.products));
+
+      this.newProduct.name = "";
+      this.newProduct.comment = "";
+      this.newProduct.price = 0;
+      this.newProduct.date = null;
+    },
   },
 
   filters: {
